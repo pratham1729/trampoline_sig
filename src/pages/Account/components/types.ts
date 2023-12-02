@@ -29,12 +29,11 @@ export interface TransactionConfirmationtProps
   context: any;
   onComplete: (context?: any) => Promise<void>;
 }
-export interface UpdateSignatureProps
-  extends TransactionComponentProps {
+
+export interface UpdateSignatureProps {
   userOp: UserOperationStruct;
   context: any;
   onComplete: (context?: any) => Promise<void>;
-  onSignatureUpdate: (userOp: UserOperationStruct) => Promise<void>;
 }
 
 export interface PostTransactionConfirmationtProps
@@ -50,7 +49,7 @@ export interface PreTransactionConfirmation
 export interface TransactionConfirmation
   extends React.FC<TransactionConfirmationtProps> {}
 
-  export interface UpdateSignature
+export interface UpdateSignatureConfirmation
   extends React.FC<UpdateSignatureProps> {}
 
 export interface PostTransactionConfirmation
@@ -60,6 +59,7 @@ export interface TransactionComponent {
   PreTransactionConfirmation: PreTransactionConfirmation;
   TransactionConfirmation: TransactionConfirmation;
   PostTransactionConfirmation: PostTransactionConfirmation;
+  UpdateSignatureConfirmation: UpdateSignatureConfirmation;
 }
 
 export interface SignMessageComponenetProps {

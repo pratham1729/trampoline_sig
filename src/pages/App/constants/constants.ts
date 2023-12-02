@@ -3,6 +3,7 @@ import {
   PreTransactionConfirmation,
   TransactionConfirmation,
   PostTransactionConfirmation,
+  UpdateSignatureConfirmation,
 } from '../../Account/components/transaction';
 import SignMessage from '../../Account/components/sign-message';
 import { AccountImplementationComponentsType } from '../../Account/components/types';
@@ -14,6 +15,7 @@ const AccountImplementation: AccountImplementationComponentsType = {
     PreTransactionConfirmation,
     TransactionConfirmation,
     PostTransactionConfirmation,
+    UpdateSignatureConfirmation,
   },
   SignMessage,
 };

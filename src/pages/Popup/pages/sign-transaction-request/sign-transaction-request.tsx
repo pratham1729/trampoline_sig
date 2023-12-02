@@ -78,7 +78,7 @@ const SignTransactionRequest = (): ReactElement => {
         )
       );
       setStage({
-        stage: 'transaction-confirmation',
+        stage: 'update-signature-confirmation',
         context,
       });
     },
@@ -87,6 +87,16 @@ const SignTransactionRequest = (): ReactElement => {
       backgroundDispatch,
       sendTransactionRequest.transactionRequest,
     ]
+  );
+
+  const onCompleteUpdateSignatureConfirmation = useCallback(
+    async (context?: any) => {
+      setStage({
+        stage: 'transaction-confirmation',
+        context,
+      });
+    },
+    []
   );
 
   const onCompleteTransactionConfirmation = useCallback(
@@ -135,6 +145,7 @@ const SignTransactionRequest = (): ReactElement => {
 
       return <></>;
     case 'transaction-confirmation':
+      console.log('User-Op-update-trans:', pendingUserOp);
       return SignTransactionComponent?.TransactionConfirmation &&
         sendModiefiedTransactionRequest.transactionRequest &&
         pendingUserOp ? (
@@ -158,8 +169,17 @@ const SignTransactionRequest = (): ReactElement => {
         </Container>
       );
     case 'update-signature-confirmation':
-          //update here
-      return <></>;
+      console.log('User-Op-update-sig:', pendingUserOp);
+      return SignTransactionComponent?.UpdateSignatureConfirmation &&
+      sendModiefiedTransactionRequest.transactionRequest &&
+      pendingUserOp ? (
+      <SignTransactionComponent.UpdateSignatureConfirmation
+        context={stage.context}
+        userOp={pendingUserOp}
+        onComplete={onCompleteUpdateSignatureConfirmation}
+      />) : (
+        <></>
+      );
     case 'post-transaction-confirmation':
       if (
         SignTransactionComponent?.PostTransactionConfirmation &&

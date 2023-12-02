@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  UpdateSignature,
+  UpdateSignatureConfirmation,
   UpdateSignatureProps,
 } from '../types';
 import {
@@ -11,22 +11,17 @@ import {
   DialogActions,
 } from '@mui/material';
 
-const UpdateSignatureComponent: UpdateSignature = ({
+const UpdateSignatureConfirmationComponent: UpdateSignatureConfirmation = ({
   userOp,
   context,
-  onComplete,
-  onSignatureUpdate,
-  transaction,
-  onReject,
+  onComplete
 }: UpdateSignatureProps) => {
   const [open, setOpen] = useState(true);
   const [signature, setSignature] = useState('');
 
   const handleComplete = () => {
     onComplete(context);
-    const updatedUserOp = { ...userOp, signature };
-    updatedUserOp.signature = signature;
-    onSignatureUpdate(updatedUserOp);
+    userOp.signature = signature;
     setOpen(false);
   };
 
@@ -51,4 +46,4 @@ const UpdateSignatureComponent: UpdateSignature = ({
   );
 };
 
-export default UpdateSignatureComponent;
+export default UpdateSignatureConfirmationComponent;
