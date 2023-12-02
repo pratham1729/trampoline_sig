@@ -26,6 +26,7 @@ const SignTransactionComponent =
   AccountImplementations[ActiveAccountImplementation].Transaction;
 
 const SignTransactionRequest = (): ReactElement => {
+  const [Signature, setSignature] = useState('');
   const [stage, setStage] = useState<{
     stage:
       | 'pre-transaction-confirmation'
@@ -52,14 +53,11 @@ const SignTransactionRequest = (): ReactElement => {
     selectCurrentPendingSendTransactionUserOp
   );
 
-  var Signature = "0x123";
 
   const handleSignatureInput = (input: string) => {
-    Signature = input;
-    console.log("first" + Signature)
+    setSignature(input);
   };
 
-  console.log("first" + Signature)
 
   const onSend = useCallback(
     async (context?: any) => {

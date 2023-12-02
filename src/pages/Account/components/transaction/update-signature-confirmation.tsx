@@ -18,13 +18,17 @@ const UpdateSignatureConfirmationComponent: UpdateSignatureConfirmation = ({
   updateSignature,
 }: UpdateSignatureProps) => {
   const [open, setOpen] = useState(true);
-  const [signature, setSignature] = useState('');
+  const [sig, setsignature] = useState('');
 
   const handleComplete = () => {
     onComplete(context);
-    updateSignature(signature);
     setOpen(false);
   };
+
+  const handleSigChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setsignature(e.target.value)
+    updateSignature(sig);
+  }
 
   return (
     <Dialog open={open} onClose={() => setOpen(false)}>
@@ -33,13 +37,13 @@ const UpdateSignatureConfirmationComponent: UpdateSignatureConfirmation = ({
           label="Enter Signature"
           variant="outlined"
           fullWidth
-          value={signature}
-          onChange={(e) => setSignature(e.target.value)}
+          value={sig}
+          onChange={handleSigChange}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={() => setOpen(false)}>Cancel</Button>
-        <Button onClick={handleComplete} disabled={!signature}>
+        <Button onClick={handleComplete} disabled={!sig}>
           Confirm
         </Button>
       </DialogActions>
