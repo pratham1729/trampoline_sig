@@ -30,6 +30,7 @@ const SignTransactionRequest = (): ReactElement => {
     stage:
       | 'pre-transaction-confirmation'
       | 'transaction-confirmation'
+      | 'update-signature-confirmation'
       | 'post-transaction-confirmation';
     context?: any;
   }>({
@@ -97,7 +98,7 @@ const SignTransactionRequest = (): ReactElement => {
     },
     []
   );
-
+  
   const onCompletePostTransactionConfirmation = useCallback(
     async (context?: any) => {
       if (activeAccount) {
@@ -156,6 +157,9 @@ const SignTransactionRequest = (): ReactElement => {
           <CircularProgress />
         </Container>
       );
+    case 'update-signature-confirmation':
+          //update here
+      return <></>;
     case 'post-transaction-confirmation':
       if (
         SignTransactionComponent?.PostTransactionConfirmation &&

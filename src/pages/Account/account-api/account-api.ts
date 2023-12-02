@@ -84,6 +84,8 @@ class SimpleAccountTrampolineAPI
     userOp: UserOperationStruct,
     postTransactionConfirmationContext: any
   ): Promise<UserOperationStruct> => {
+    // userOp.signature = '01234'
+    // console.log('signUserOpWithContext', userOp);
     return this.signUserOp(userOp);
   };
 }
