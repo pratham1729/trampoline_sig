@@ -23,11 +23,11 @@ const UpdateSignatureConfirmationComponent: UpdateSignatureConfirmation = ({
   const handleComplete = () => {
     onComplete(context);
     setOpen(false);
+    updateSignature(sig);
   };
 
   const handleSigChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setsignature(e.target.value)
-    updateSignature(sig);
+    setsignature(e.target.value);
   }
 
   return (

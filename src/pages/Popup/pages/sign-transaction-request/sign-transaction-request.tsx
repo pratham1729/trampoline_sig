@@ -24,9 +24,8 @@ import { setModifyTransactionRequest } from '../../../Background/redux-slices/tr
 
 const SignTransactionComponent =
   AccountImplementations[ActiveAccountImplementation].Transaction;
-
+var Signature: string;
 const SignTransactionRequest = (): ReactElement => {
-  const [Signature, setSignature] = useState('');
   const [stage, setStage] = useState<{
     stage:
       | 'pre-transaction-confirmation'
@@ -55,7 +54,7 @@ const SignTransactionRequest = (): ReactElement => {
 
 
   const handleSignatureInput = (input: string) => {
-    setSignature(input);
+    Signature = input;
   };
 
 
@@ -153,8 +152,6 @@ const SignTransactionRequest = (): ReactElement => {
 
       return <></>;
     case 'transaction-confirmation':
-      console.log(Signature);
-      console.log("aaaaaaaaa")
       return SignTransactionComponent?.TransactionConfirmation &&
         sendModiefiedTransactionRequest.transactionRequest &&
         pendingUserOp ? (
@@ -178,8 +175,6 @@ const SignTransactionRequest = (): ReactElement => {
         </Container>
       );
     case 'update-signature-confirmation':
-      console.log(Signature);
-      console.log("bbbbbbbbbb")
       //write signature to disk uding some package
       return SignTransactionComponent?.UpdateSignatureConfirmation &&
       sendModiefiedTransactionRequest.transactionRequest &&

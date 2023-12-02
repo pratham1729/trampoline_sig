@@ -48,8 +48,6 @@ const TransactionConfirmationComponent: TransactionConfirmation = ({
     })
   );
 
-  console.log('heres');
-
   return (
     <Container>
       <Box sx={{ p: 2 }}>
