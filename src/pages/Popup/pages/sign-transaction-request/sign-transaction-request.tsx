@@ -21,7 +21,6 @@ import {
 } from '../../../Background/redux-slices/transactions';
 import { EthersTransactionRequest } from '../../../Background/services/types';
 import { setModifyTransactionRequest } from '../../../Background/redux-slices/transactions';
-import fs from 'fs';
 
 const SignTransactionComponent =
   AccountImplementations[ActiveAccountImplementation].Transaction;
@@ -57,7 +56,10 @@ const SignTransactionRequest = (): ReactElement => {
 
   const handleSignatureInput = (input: string) => {
     Signature = input;
+    console.log("first" + Signature)
   };
+
+  console.log("first" + Signature)
 
   const onSend = useCallback(
     async (context?: any) => {
@@ -153,18 +155,8 @@ const SignTransactionRequest = (): ReactElement => {
 
       return <></>;
     case 'transaction-confirmation':
-      if (!pendingUserOp?.signature) {
-        const data: string = String(pendingUserOp?.signature) || Signature;
-      const filePath: string = 'transaction.txt';
-      fs.writeFile(filePath, data, (err) => {
-        if (err) {
-          console.error('Error writing to file:', err);
-        } else {
-          console.log('File has been written successfully!');
-        }
-      });
-    }
-
+      console.log(Signature);
+      console.log("aaaaaaaaa")
       return SignTransactionComponent?.TransactionConfirmation &&
         sendModiefiedTransactionRequest.transactionRequest &&
         pendingUserOp ? (
@@ -188,7 +180,8 @@ const SignTransactionRequest = (): ReactElement => {
         </Container>
       );
     case 'update-signature-confirmation':
-
+      console.log(Signature);
+      console.log("bbbbbbbbbb")
       //write signature to disk uding some package
       return SignTransactionComponent?.UpdateSignatureConfirmation &&
       sendModiefiedTransactionRequest.transactionRequest &&

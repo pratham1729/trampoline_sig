@@ -177,7 +177,9 @@ export const sendTransaction = createBackgroundAsyncThunk(
         unsignedUserOp,
         context
       );
+      console.log('signedUserOp.Signature 1', signedUserOp.signature);
       signedUserOp.signature = signature;
+      console.log('signedUserOp.Signature 2', signedUserOp.signature);
       const txnHash = keyringService.sendUserOp(address, signedUserOp);
 
       dispatch(clearTransactionState());
@@ -188,7 +190,8 @@ export const sendTransaction = createBackgroundAsyncThunk(
 
       providerBridgeService.resolveRequest(origin || '', txnHash);
     }
-  }
+  }  
+
 );
 
 export const createUnsignedUserOp = createBackgroundAsyncThunk(
