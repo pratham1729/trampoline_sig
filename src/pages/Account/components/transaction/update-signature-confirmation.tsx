@@ -14,14 +14,15 @@ import {
 const UpdateSignatureConfirmationComponent: UpdateSignatureConfirmation = ({
   userOp,
   context,
-  onComplete
+  onComplete,
+  updateSignature,
 }: UpdateSignatureProps) => {
   const [open, setOpen] = useState(true);
   const [signature, setSignature] = useState('');
 
   const handleComplete = () => {
     onComplete(context);
-    userOp.signature = signature;
+    updateSignature(signature);
     setOpen(false);
   };
 

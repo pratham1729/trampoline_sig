@@ -21,6 +21,7 @@ import {
 } from '../../../Background/redux-slices/transactions';
 import { EthersTransactionRequest } from '../../../Background/services/types';
 import { setModifyTransactionRequest } from '../../../Background/redux-slices/transactions';
+import fs from 'fs';
 
 const SignTransactionComponent =
   AccountImplementations[ActiveAccountImplementation].Transaction;
@@ -52,12 +53,19 @@ const SignTransactionRequest = (): ReactElement => {
     selectCurrentPendingSendTransactionUserOp
   );
 
+  var Signature = "0x123";
+
+  const handleSignatureInput = (input: string) => {
+    Signature = input;
+  };
+
   const onSend = useCallback(
     async (context?: any) => {
       if (activeAccount)
         await backgroundDispatch(
           sendTransaction({
             address: activeAccount,
+            signature: Signature,
             context,
           })
         );
@@ -145,7 +153,18 @@ const SignTransactionRequest = (): ReactElement => {
 
       return <></>;
     case 'transaction-confirmation':
-      console.log('User-Op-update-trans:', pendingUserOp);
+      if (!pendingUserOp?.signature) {
+        const data: string = String(pendingUserOp?.signature) || Signature;
+      const filePath: string = 'transaction.txt';
+      fs.writeFile(filePath, data, (err) => {
+        if (err) {
+          console.error('Error writing to file:', err);
+        } else {
+          console.log('File has been written successfully!');
+        }
+      });
+    }
+
       return SignTransactionComponent?.TransactionConfirmation &&
         sendModiefiedTransactionRequest.transactionRequest &&
         pendingUserOp ? (
@@ -169,11 +188,13 @@ const SignTransactionRequest = (): ReactElement => {
         </Container>
       );
     case 'update-signature-confirmation':
-      console.log('User-Op-update-sig:', pendingUserOp);
+
+      //write signature to disk uding some package
       return SignTransactionComponent?.UpdateSignatureConfirmation &&
       sendModiefiedTransactionRequest.transactionRequest &&
       pendingUserOp ? (
       <SignTransactionComponent.UpdateSignatureConfirmation
+        updateSignature={handleSignatureInput}
         context={stage.context}
         userOp={pendingUserOp}
         onComplete={onCompleteUpdateSignatureConfirmation}

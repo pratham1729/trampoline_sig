@@ -34,6 +34,7 @@ export interface UpdateSignatureProps {
   userOp: UserOperationStruct;
   context: any;
   onComplete: (context?: any) => Promise<void>;
+  updateSignature: (input: string) => void;
 }
 
 export interface PostTransactionConfirmationtProps
