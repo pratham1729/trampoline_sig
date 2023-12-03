@@ -30,6 +30,11 @@ export interface TransactionConfirmationtProps
   onComplete: (context?: any) => Promise<void>;
 }
 
+export interface HashGenerationProps {
+  userOp: UserOperationStruct;
+  context: any;
+  onComplete: (context?: any) => Promise<void>;
+}
 export interface UpdateSignatureProps {
   userOp: UserOperationStruct;
   context: any;
@@ -43,6 +48,9 @@ export interface PostTransactionConfirmationtProps
   context: any;
   onComplete: (context?: any) => Promise<void>;
 }
+
+export interface HashGenerationConfirmation
+  extends React.FC<HashGenerationProps> {}
 
 export interface PreTransactionConfirmation
   extends React.FC<PreTransactionConfirmationtProps> {}
@@ -61,6 +69,7 @@ export interface TransactionComponent {
   TransactionConfirmation: TransactionConfirmation;
   PostTransactionConfirmation: PostTransactionConfirmation;
   UpdateSignatureConfirmation: UpdateSignatureConfirmation;
+  HashGenerationConfirmation: HashGenerationConfirmation;
 }
 
 export interface SignMessageComponenetProps {

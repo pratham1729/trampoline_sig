@@ -31,7 +31,8 @@ const SignTransactionRequest = (): ReactElement => {
       | 'pre-transaction-confirmation'
       | 'transaction-confirmation'
       | 'update-signature-confirmation'
-      | 'post-transaction-confirmation';
+      | 'post-transaction-confirmation'
+      | 'hash-generation';
     context?: any;
   }>({
     stage: 'pre-transaction-confirmation',
@@ -85,7 +86,7 @@ const SignTransactionRequest = (): ReactElement => {
         )
       );
       setStage({
-        stage: 'update-signature-confirmation',
+        stage: 'hash-generation',
         context,
       });
     },
@@ -95,7 +96,15 @@ const SignTransactionRequest = (): ReactElement => {
       sendTransactionRequest.transactionRequest,
     ]
   );
-
+  const onCompleteHashGeneration = useCallback(
+    async (context?: any) => {
+      setStage({
+        stage: 'update-signature-confirmation',
+        context,
+      });
+    },
+    []
+  );
   const onCompleteUpdateSignatureConfirmation = useCallback(
     async (context?: any) => {
       setStage({
@@ -173,6 +182,17 @@ const SignTransactionRequest = (): ReactElement => {
         >
           <CircularProgress />
         </Container>
+      );
+    case 'hash-generation':
+      return SignTransactionComponent?.HashGenerationConfirmation &&
+      sendModiefiedTransactionRequest.transactionRequest &&
+      pendingUserOp ? (
+      <SignTransactionComponent.HashGenerationConfirmation
+        context={stage.context}
+        userOp={pendingUserOp}
+        onComplete={onCompleteHashGeneration}
+      />) : (
+        <></>
       );
     case 'update-signature-confirmation':
       //write signature to disk uding some package
