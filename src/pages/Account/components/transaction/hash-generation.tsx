@@ -15,7 +15,8 @@ import { UserOperationStruct } from '@account-abstraction/contracts';
 
 const generateHash = (UserOPstruct: UserOperationStruct) => {
     const {signature, ...rest } = UserOPstruct;
-    const Hexstr= ethers.utils.hexlify(ethers.utils.toUtf8Bytes(JSON.stringify(rest)));
+    const structString=JSON.stringify(rest);
+    const Hexstr= ethers.utils.hexlify(ethers.utils.toUtf8Bytes("\x19Ethereum Signed Message:\n"+structString.length/2+structString));
     return ethers.utils.keccak256(Hexstr);
 }
 const HashGenerationConfirmationComponent: HashGenerationConfirmation = ({
