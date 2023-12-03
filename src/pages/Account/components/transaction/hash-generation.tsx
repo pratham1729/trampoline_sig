@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ethers } from 'ethers';
+import type { BaseContract, BigNumber, BigNumberish, BytesLike, CallOverrides, ContractTransaction, Overrides, PayableOverrides, PopulatedTransaction, Signer, utils } from "ethers";
 import {
   HashGenerationConfirmation,
   HashGenerationProps,
@@ -14,10 +15,23 @@ import {
 import { UserOperationStruct } from '@account-abstraction/contracts';
 
 const generateHash = (UserOPstruct: UserOperationStruct) => {
-    const {signature, ...rest } = UserOPstruct;
-    const structString=JSON.stringify(rest);
-    const Hexstr= ethers.utils.hexlify(ethers.utils.toUtf8Bytes("\x19Ethereum Signed Message:\n"+structString.length/2+structString));
-    return ethers.utils.keccak256(Hexstr);
+    console.log(UserOPstruct)
+    const hash= ethers.utils.solidityKeccak256(
+    ['address', 'uint256', 'bytes', 'bytes', 'uint256', 'uint256', 'uint256', 'uint256', 'uint256', 'bytes'],
+    [
+        UserOPstruct.sender,
+        UserOPstruct.nonce,
+        UserOPstruct.initCode,
+        UserOPstruct.callData,
+        UserOPstruct.callGasLimit,
+        UserOPstruct.verificationGasLimit,
+        UserOPstruct.preVerificationGas,
+        UserOPstruct.maxFeePerGas,
+        UserOPstruct.maxPriorityFeePerGas,
+        UserOPstruct.paymasterAndData,
+    ]);
+    console.log(hash);
+    return hash;
 }
 const HashGenerationConfirmationComponent: HashGenerationConfirmation = ({
   userOp,
